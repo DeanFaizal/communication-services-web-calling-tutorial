@@ -48,8 +48,8 @@ module.exports = {
     devServer: {
         open: true,
         port: PORT,
-        before: function(app) {
-            app.post('/tokens/provisionUser', async (req, res) => {
+        onBeforeSetupMiddleware: (server) => {
+            server.app.post('/tokens/provisionUser', async (req, res) => {
                 try {
                     let communicationUserId = await communicationIdentityClient.createUser();
                     const tokenResponse = await communicationIdentityClient.issueToken(communicationUserId, ["voip"]);
